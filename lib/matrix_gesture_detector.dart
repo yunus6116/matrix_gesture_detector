@@ -64,6 +64,7 @@ class MatrixGestureDetector extends StatefulWidget {
 
   final VoidCallback? onScaleStart;
   final VoidCallback? onScaleEnd;
+  final VoidCallback? onTap;
 
   const MatrixGestureDetector({
     Key? key,
@@ -77,6 +78,7 @@ class MatrixGestureDetector extends StatefulWidget {
     this.behavior = HitTestBehavior.deferToChild,
     this.onScaleStart,
     this.onScaleEnd,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -124,6 +126,7 @@ class _MatrixGestureDetectorState extends State<MatrixGestureDetector> {
         widget.clipChild ? ClipRect(child: widget.child) : widget.child;
     return GestureDetector(
       behavior: widget.behavior,
+      onTap: onTap,
       onScaleStart: onScaleStart,
       onScaleUpdate: onScaleUpdate,
       onScaleEnd: onScaleEnd,
@@ -160,10 +163,15 @@ class _MatrixGestureDetectorState extends State<MatrixGestureDetector> {
     }
   }
 
+  void onTap() {
+    if (widget.onTap != null) {
+      widget.onTap!();
+    }
+  }
+
   void onScaleUpdate(ScaleUpdateDetails details) {
     if (widget.onScaleStart != null) {
-      widget
-          .onScaleStart!(); // Why added onScaleUpdate? refer: https://github.com/pskink/matrix_gesture_detector/issues/5#issuecomment-553748004
+      widget.onScaleStart!();
     }
 
     translationDeltaMatrix = Matrix4.identity();
