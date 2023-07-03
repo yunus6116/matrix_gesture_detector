@@ -65,6 +65,8 @@ class MatrixGestureDetector extends StatefulWidget {
   final VoidCallback? onScaleStart;
   final VoidCallback? onScaleEnd;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPressStart;
+  final VoidCallback? onLongPressEnd;
 
   const MatrixGestureDetector({
     Key? key,
@@ -79,6 +81,8 @@ class MatrixGestureDetector extends StatefulWidget {
     this.onScaleStart,
     this.onScaleEnd,
     this.onTap,
+    this.onLongPressStart,
+    this.onLongPressEnd,
   }) : super(key: key);
 
   @override
@@ -130,6 +134,8 @@ class _MatrixGestureDetectorState extends State<MatrixGestureDetector> {
       onScaleStart: onScaleStart,
       onScaleUpdate: onScaleUpdate,
       onScaleEnd: onScaleEnd,
+      onLongPressStart: onLongPressStart,
+      onLongPressEnd: onLongPressEnd,
       child: child,
     );
   }
@@ -166,6 +172,18 @@ class _MatrixGestureDetectorState extends State<MatrixGestureDetector> {
   void onTap() {
     if (widget.onTap != null) {
       widget.onTap!();
+    }
+  }
+
+  void onLongPressStart(LongPressStartDetails details) {
+    if (widget.onLongPressStart != null) {
+      widget.onLongPressStart!();
+    }
+  }
+
+  void onLongPressEnd(LongPressEndDetails details) {
+    if (widget.onLongPressEnd != null) {
+      widget.onLongPressEnd!();
     }
   }
 
